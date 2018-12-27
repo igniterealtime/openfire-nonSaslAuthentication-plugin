@@ -1,13 +1,16 @@
 sudo: false
 language: java
 jdk:
-  - oraclejdk8
-
-before_install: "git clone --depth 1 https://github.com/igniterealtime/ci-tooling.git target/ci-tooling"
-
+- oraclejdk8
+before_install: git clone --depth 1 https://github.com/igniterealtime/ci-tooling.git
+  target/ci-tooling
 deploy:
   provider: script
-  script: "mvn deploy --settings target/ci-tooling/maven-settings-for-openfire-plugins.xml"
+  script: mvn deploy --settings target/ci-tooling/maven-settings-for-openfire-plugins.xml
   skip_cleanup: true
   on:
     all_branches: true
+env:
+  global:
+  - secure: fsv7E9e/2X+kmaBRPIRFvND3Af9rYO4jopXO/73uPaCTgJl9xTbIKhfrkEXE4CF+3/w0cGc3KKDUGFUaJnq4tcKo7kIFXm3Kni0S20Hf3cP5XpvaKZS1O60rfx6E5sphrszo7ttWWW1GY4wlFmkvL77ksDeIDD1vkTvrNyItkps+BbkRVW+C7i02KaNqbzJ0QoUjgETyJiisdskbj4OBL05w+vA3o40+2Ug2U7tz8ZYtCqlfbKPlVjBK8BwOvopG8RwuEsXAvPjwjcxvrPz6DzrQRHcKgxByCB/fIx79H078NkOQzCAPCd3SKX3+WQHlBb1ucYRz2VaJp8OwXDy75KBk7tmBZc8kzvv2DTzg2U/3nCJVhiphc4Ha3w4JaEKrWTVhp7iIw4mFjF5i4kCTRlF5iaBpvUzCKNa+nWyKZ+kls3JI0jmsFvbL7iJbgzRFSDyrLXDb3D+rDMLRYgfRwxXf/vb81pWlt8C7HKPueKLTyFCALSvM2wAuGuWHrCrQM56oA45hS2Mu21yYSQvpW8/kpooR0WiOl38NZyIK6AbKL+5ROm9aZFHbEwpNruN4PidxVASAHH75eDTXUeQPt0YFK6lAnbQwDBP4U2V1J8gMzioZ5jsKYOet0Pp91wjs3HG/JHoscg8NVKpZ1H94CycENU3AdyUW8JrK4Mnzi/Y=
+  - secure: E1bq6l4Bp4bK/Lecy53prYAoJn/do0jGhiwKAFuCSJVoq8JEGT56Typml0yR5UKuZ4ksc99k2jdSB+WPZhFhxj07wtFLPPcKARSTExLDCRz5NcgFCzn5LyfQDhNW7FQOYyeAK7J7/nk1vGY/PJCgt3L48PEbWZ74PDbczk+LlfAh2bC//O1RQ0m1yD3bmuxLBdt1uikSk1n1nd9SIPuhPpmD2T2iDXCKt5/M/2tJyd832xBzQrUk4Lx8OOTJBFNQ3tIzYQSjmGKmWvusfJuv37K3l2SpyaWzii9XZhTQZnySY3Z4sg8Fb5KkgGrJJOeS7Tj/ppK4h+QsSNLddwlxN1uG9vkk9QcC7YyeKhqttQHXoQABhbWGG0JOxgHZXuDFsKTncyrJId1TU3x1mu+M1GtNw42AAmbzQD9wR1s2qjiGi8jcHmOpDFHnOmGEGBHCVt3L8oBWH7Q2ISnjZDShtNx55Sqov1OG/40pfw2QBAfVHrc5XE/cQR9Wa2Fhf0ugfeL1VGeksb+WXRyMKJZkSXr9bnqUAFRaifxNXc+xUXJ9W2SPKSq8OVXFQEYanYNBBrcRVq3GZ5cPglvMojOEdoncRozT1G69svKbF7NAOr+3DqVxow3RnfB6ZRAGu7kz90E4JKvTNFJkHo8SA6M9OT5f9slfGJv5rmWPFYD2Ir4=
