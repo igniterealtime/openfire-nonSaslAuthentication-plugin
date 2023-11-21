@@ -6,6 +6,6 @@
     <description>This plugin implements a the (obsolete!) XEP-0078 specification for authentication using the jabber:iq:auth namespace.</description>
     <author>Guus der Kinderen</author>
     <version>${project.version}</version>
-    <date>tbc.</date>
-    <minServerVersion>4.1.0 Alpha</minServerVersion>
+    <date>2023-11-21</date>
+    <minServerVersion>4.1.0</minServerVersion>
 </plugin>
