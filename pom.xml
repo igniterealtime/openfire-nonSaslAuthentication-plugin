@@ -8,7 +8,7 @@
     </parent>
     <groupId>org.igniterealtime.openfire.plugins</groupId>
     <artifactId>nonSaslAuthentication</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>non-SASL Authentication Plugin</name>
     <description>This plugin implements a the (obsolete!) XEP-0078 specification for authentication using the jabber:iq:auth namespace.</description>
 
