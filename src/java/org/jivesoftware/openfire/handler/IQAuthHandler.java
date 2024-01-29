@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005-2008 Jive Software. All rights reserved.
+ * Copyright (C) 2005-2008 Jive Software, 2024 Ignite Realtime Foundation. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ import org.xmpp.packet.StreamError;
 /**
  * Implements the TYPE_IQ jabber:iq:auth protocol (plain only). Clients
  * use this protocol to authenticate with the server. A 'get' query
- * runs an authentication probe with a given user name. Return the
+ * runs an authentication probe with a given username. Return the
  * authentication form or an error indicating the user is not
  * registered on the server.<p>
  *
@@ -74,8 +74,8 @@ public class IQAuthHandler extends IQHandler {
 
     private static final Logger Log = LoggerFactory.getLogger(IQAuthHandler.class);
 
-    private Element probeResponse;
-    private IQHandlerInfo info;
+    private final Element probeResponse;
+    private final IQHandlerInfo info;
 
     private String serverName;
     private UserManager userManager;
@@ -132,7 +132,7 @@ public class IQAuthHandler extends IQHandler {
                     // value we need to clean up the TO attribute and send directly the response.
                     // The TO attribute will contain an incorrect value since we are setting a fake
                     // JID until the user actually authenticates with the server.
-                    if (session.getStatus() != Session.STATUS_AUTHENTICATED) {
+                    if (session.getStatus() != Session.Status.AUTHENTICATED) {
                         response.setTo((JID)null);
                     }
                 }
@@ -141,7 +141,7 @@ public class IQAuthHandler extends IQHandler {
                     if (query.elements().isEmpty()) {
                         // Anonymous authentication
                         response = anonymousLogin(session, packet);
-                        resourceBound = session.getStatus() == Session.STATUS_AUTHENTICATED;
+                        resourceBound = session.getStatus() == Session.Status.AUTHENTICATED;
                     }
                     else {
                         String username = query.elementText("username");
@@ -153,9 +153,9 @@ public class IQAuthHandler extends IQHandler {
                         }
     
                         // If we're already logged in, this is a password reset
-                        if (session.getStatus() == Session.STATUS_AUTHENTICATED) {
+                        if (session.getStatus() == Session.Status.AUTHENTICATED) {
                             // Check that a new password has been specified
-                            if (password == null || password.trim().length() == 0) {
+                            if (password == null || password.trim().isEmpty()) {
                                 response = IQ.createResultIQ(packet);
                                 response.setError(PacketError.Condition.not_allowed);
                                 response.setType(IQ.Type.error);
@@ -179,7 +179,7 @@ public class IQAuthHandler extends IQHandler {
                         else {
                             // it is an auth attempt
                             response = login(username, query, packet, password, session, digest);
-                            resourceBound = session.getStatus() == Session.STATUS_AUTHENTICATED;
+                            resourceBound = session.getStatus() == Session.Status.AUTHENTICATED;
                         }
                     }
                 }
@@ -213,7 +213,7 @@ public class IQAuthHandler extends IQHandler {
     private IQ login(String username, Element iq, IQ packet, String password, LocalClientSession session, String digest)
             throws UnauthorizedException, UserNotFoundException, ConnectionException, InternalUnauthenticatedException {
         // Verify the validity of the username
-        if (username == null || username.trim().length() == 0) {
+        if (username == null || username.trim().isEmpty()) {
             throw new UnauthorizedException("Invalid username (empty or null).");
         }
         try {
@@ -228,7 +228,7 @@ public class IQAuthHandler extends IQHandler {
             try {
                 resource = JID.resourceprep(resource);
             }
-            catch (StringprepException e) {
+            catch (IllegalArgumentException e) {
                 throw new UnauthorizedException("Invalid resource: " + resource, e);
             }
         }
@@ -298,7 +298,7 @@ public class IQAuthHandler extends IQHandler {
     {
         IQ response;
         // Check if users can change their passwords and a password was specified
-        if (!registerHandler.canChangePassword() || password == null || password.length() == 0) {
+        if (!registerHandler.canChangePassword() || password == null || password.isEmpty()) {
             throw new UnauthorizedException();
         }
         else {
@@ -403,7 +403,7 @@ public class IQAuthHandler extends IQHandler {
             throw new UnauthorizedException();
         }
         // Got this far, so the user must be authorized.
-        return new AuthToken(username);
+        return AuthToken.generateUserToken(username);
     }
 
 }
