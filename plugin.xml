@@ -3,9 +3,9 @@
 <plugin>
     <class>org.jivesoftware.openfire.plugin.NonSaslAuthenticationPlugin</class>
     <name>Non-SASL Authentication</name>
-    <description>This plugin implements a the (obsolete!) XEP-0078 specification for authentication using the jabber:iq:auth namespace.</description>
+    <description>This plugin implements the (obsolete!) XEP-0078 specification for authentication using the jabber:iq:auth namespace.</description>
     <author>Guus der Kinderen</author>
     <version>${project.version}</version>
-    <date>2023-11-21</date>
-    <minServerVersion>4.1.0</minServerVersion>
+    <date>2024-01-29</date>
+    <minServerVersion>4.8.0</minServerVersion>
 </plugin>
